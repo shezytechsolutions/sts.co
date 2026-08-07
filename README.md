@@ -31,7 +31,7 @@ The site covers:
 
 > Add your deployed link here once hosted, e.g. via GitHub Pages, Netlify, or Vercel:
 >
-> **[shezytechsolutions](#https://shezytechsolutions.github.io/sts.co/shezy-tech-solutions.html)**
+> **[shezytechsolutions](https://shezytechsolutions.github.io/sts.co/shezy-tech-solutions.html)**
 
 ## 🖥️ Tech Stack
 
