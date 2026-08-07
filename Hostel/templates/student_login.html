@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Student Portal • Login</title>
+  <link rel="stylesheet" href="/static/css/s_login.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    .google-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: white;
+      border: 1px solid #ddd;
+      color: #333;
+      padding: 12px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      margin-top: 15px;
+      width: 100%;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    
+    .google-btn:hover {
+      background: #f8f9fa;
+      border-color: #583d06;
+      transform: translateY(-2px);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 20px 0;
+    }
+    
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .divider span {
+      padding: 0 10px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      background: var(--card);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Left branding panel -->
+    <section class="brand" aria-label="University brand">
+      <div class="brand-content">
+        <div class="logo-container">
+          <img src="/static/img/logo.png" alt="BBS-Utech Logo" class="brand-logo">
+        </div>
+        
+        <div class="brand-title">
+          <h1>Student Portal Login</h1>
+          <p class="brand-subtitle"><b>Access Your Hostel Account</b></p>
+        </div>
+        
+        <div class="more-info-container">
+          <a href="#" class="more-info-link" onclick="showMoreInfo()">
+            <span class="more-info-text">More Info</span>
+            <i class="fas fa-chevron-right more-info-icon"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right login card -->
+    <section class="card">
+      <div class="card-header">
+        <h2>Student Login</h2>
+        <p>Access your hostel management account</p>
+      </div>
+
+      <!-- Google Sign In Button -->
+      <a href="/google_login" class="google-btn">
+        <i class="fab fa-google" style="color: #4285f4;"></i>
+        <span>Continue with Google</span>
+      </a>
+
+      <!-- Divider -->
+      <div class="divider">
+        <span>OR</span>
+      </div>
+
+      <!-- Student Login Form -->
+      <form id="studentForm" method="POST" action="/student_login" class="login-form">
+        <div class="field">
+          <label for="studentEmail">Student Email</label>
+          <input class="input" type="email" id="studentEmail" name="email" placeholder="student@gmail.com" required>
+        </div>
+
+        <div class="field">
+          <label for="studentPassword">Password</label>
+          <div class="password-container">
+            <input class="input" type="password" id="studentPassword" name="password" placeholder="••••••••" required>
+            <span class="password-toggle" onclick="togglePassword('studentPassword')">
+              <i class="fas fa-eye"></i>
+            </span>
+          </div>
+        </div>
+
+        <button class="btn" type="submit">Login</button>
+        
+        <div class="register-link" style="text-align: center; margin-top: 20px;">
+          <p>New student? <a href="/student_register" style="color: var(--brand); font-weight: 600;">Register here</a></p>
+        </div>
+        
+        <div class="back-link" style="text-align: center; margin-top: 10px;">
+          <p><a href="/" style="color: var(--brand); font-weight: 600;">← Back to Home</a></p>
+        </div>
+      </form>
+    </section>
+  </div>
+
+  <script src="/static/js/student_login.js"></script>
+  <script>
+    function togglePassword(inputId) {
+      const input = document.getElementById(inputId);
+      const icon = input.parentElement.querySelector('.password-toggle i');
+      
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      } else {
+        input.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      }
+    }
+
+    function showMoreInfo() {
+      showNotification('Student Portal: Manage your room allocation, application status, and personal profile.', 'info');
+    }
+  </script>
+</body>
+</html>

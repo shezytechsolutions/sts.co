@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Campus-Hms</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style_student_dashboard.css">
+  <link rel="icon" href="/static/img/logo.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="/static/img/logo.png" alt="Logo">
+        <div class="brand-titles">
+          <span class="brand-title">BBS UTECH</span>
+          <span class="brand-subtitle">Student Portal</span>
+        </div>
+        <button class="sidebar-toggle" id="collapseSidebar" aria-label="Collapse sidebar">
+          <i class="fa-solid fa-angles-left"></i>
+        </button>
+      </div>
+
+      <nav class="menu">
+        <a class="menu-link active" href="#" data-target="dashboard">
+          <i class="fa-solid fa-gauge-high"></i> <span>Dashboard</span>
+        </a>
+        <a class="menu-link" href="#" data-target="profile">
+          <i class="fa-solid fa-user"></i> <span>My Profile</span>
+        </a>
+
+        <a class="menu-link" href="#" data-target="complaints">
+          <i class="fas fa-comment-dots"></i> <span>Complaints</span>
+        </a>
+        <!-- ADD FEE MANAGEMENT HERE -->
+        <a class="menu-link" href="#" data-target="fees">
+          <i class="fas fa-rupee-sign"></i> <span>Fee Management</span>
+        </a>
+        <a class="menu-link" href="#" data-target="id-card">
+          <i class="fas fa-id-card"></i> <span>ID Card</span>
+        </a>
+
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="btn-outline" id="darkModeToggle" aria-label="Toggle dark mode">
+          <i class="fa-regular fa-moon"></i> <span>Theme</span>
+        </button>
+        <a href="/logout" class="btn-outline danger">
+          <i class="fa-solid fa-right-from-bracket"></i> <span>Logout</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+      <!-- Topbar -->
+      <header class="topbar">
+        <button class="sidebar-open" id="openSidebar" aria-label="Open sidebar">
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <div class="top-actions">
+          <!-- Notification Bell -->
+          <div class="notification-bell">
+            <button class="icon-btn" title="Notifications" id="notificationBell">
+              <i class="fas fa-bell"></i>
+              <span class="badge" id="notificationCount">0</span>
+            </button>
+          </div>
+
+
+
+          <!-- Avatar -->
+          <div class="avatar" id="avatarRoot">
+            <img src="/static/img/default-avatar.jpg" alt="Student" id="topbarAvatar">
+            <div class="avatar-menu" id="avatarMenu">
+              <a href="#" data-target="profile">
+                <i class="fas fa-user"></i> My Profile
+              </a>
+              <a href="#" data-target="settings">
+                <i class="fas fa-cog"></i> Settings
+              </a>
+              <a href="/logout" class="danger">
+                <i class="fas fa-sign-out-alt"></i> Logout
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Student Dashboard Section -->
+      <section class="page visible" id="dashboard">
+        <div class="page-header">
+          <h1 class="page-title">Student Dashboard</h1>
+          <div class="header-actions">
+            <button class="btn-primary" onclick="studentDashboard.loadStats()">
+              <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+          </div>
+        </div>
+
+        <!-- Announcement Main Display -->
+        <div class="announcement-card-main" id="announcementCardMain">
+          <!-- Announcement content will be loaded here dynamically -->
+        </div>
+
+        <!-- Fallback: Show welcome card when no announcements -->
+        <div class="welcome-card" id="welcomeCardFallback" style="display: none;">
+          <div class="welcome-content">
+            <div class="welcome-avatar">
+              <img src="/static/img/default-avatar.jpg" alt="Profile" id="dashboardAvatar">
+              <div class="avatar-overlay">
+                <i class="fas fa-camera"></i>
+              </div>
+            </div>
+            <div class="welcome-text">
+              <h2>Welcome back, <span id="studentName">Student</span>! 👋</h2>
+              <p>There are no active announcements at the moment.</p>
+              <div class="welcome-meta">
+                <span class="meta-item">
+                  <i class="fas fa-calendar"></i>
+                  <span id="currentDate">Loading...</span>
+                </span>
+                <span class="meta-item">
+                  <i class="fas fa-clock"></i>
+                  <span id="lastLogin">Recently active</span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="welcome-status">
+            <span class="status-badge status-approved" id="studentStatus">Approved</span>
+            <div class="status-details">
+              <small>Student ID: <strong id="studentID">N/A</strong></small>
+              <small>Department: <strong id="studentDept">N/A</strong></small>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Student Stats Grid -->
+        <div class="student-stats-grid">
+          <div class="student-stat-card" onclick="studentDashboard.viewRoomDetails()">
+            <div class="stat-icon room">
+              <i class="fas fa-door-open"></i>
+            </div>
+            <div class="stat-info">
+              <h3 id="studentRoom">N/A</h3>
+              <p>Room Assigned</p>
+              <div class="stat-subtitle">
+                <i class="fas fa-building"></i>
+                <span>Hostel Block A</span>
+              </div>
+            </div>
+            <div class="stat-badge available" id="roomStatusBadge">Available</div>
+          </div>
+
+          <div class="student-stat-card" onclick="studentDashboard.viewFeeDetails()">
+            <div class="stat-icon fee">
+              <i class="fas fa-money-bill-wave"></i>
+            </div>
+            <div class="stat-info">
+              <h3 id="feeStatus">Paid</h3>
+              <p>Fee Status</p>
+              <div class="stat-subtitle">
+                <i class="fas fa-calendar"></i>
+                <span>Current Semester</span>
+              </div>
+            </div>
+            <div class="stat-badge paid" id="feeStatusBadge">Current</div>
+          </div>
+
+          <div class="student-stat-card" onclick="studentDashboard.viewIDCard()">
+            <div class="stat-icon id">
+              <i class="fas fa-id-card"></i>
+            </div>
+            <div class="stat-info">
+              <h3 id="idCardStatus">Active</h3>
+              <p>ID Card Status</p>
+              <div class="stat-subtitle">
+                <i class="fas fa-check-circle"></i>
+                <span>Verified</span>
+              </div>
+            </div>
+            <div class="stat-badge active" id="idStatusBadge">Valid</div>
+          </div>
+
+          <div class="student-stat-card" onclick="studentDashboard.viewAttendance()">
+            <div class="stat-icon attendance">
+              <i class="fas fa-calendar-check"></i>
+            </div>
+            <div class="stat-info">
+              <h3 id="attendance">95%</h3>
+              <p>Attendance</p>
+              <div class="stat-subtitle">
+                <i class="fas fa-chart-line"></i>
+                <span>This Month</span>
+              </div>
+            </div>
+            <div class="stat-badge good" id="attendanceBadge">Excellent</div>
+          </div>
+        </div>
+
+        <!-- Dashboard Panels -->
+        <div class="dashboard-panels">
+          <!-- Left Column -->
+          <div class="panel-column">
+            <!-- Quick Actions -->
+            <div class="panel quick-actions-panel">
+              <div class="panel-head">
+                <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+                <span class="panel-subtitle">Frequently used features</span>
+              </div>
+              <div class="panel-body">
+                <div class="quick-actions-grid">
+                  <button class="quick-action-btn" onclick="loadPageData('profile')">
+                    <div class="action-icon">
+                      <i class="fas fa-user-edit"></i>
+                    </div>
+                    <span>Update Profile</span>
+                    <small>Edit personal information</small>
+                  </button>
+                  <button class="quick-action-btn" onclick="studentDashboard.downloadID()">
+                    <div class="action-icon">
+                      <i class="fas fa-download"></i>
+                    </div>
+                    <span>Download ID Card</span>
+                    <small>Get digital ID card</small>
+                  </button>
+                  <button class="quick-action-btn" onclick="studentDashboard.submitComplaint()">
+                    <div class="action-icon">
+                      <i class="fas fa-comment-dots"></i>
+                    </div>
+                    <span>Submit Complaint</span>
+                    <small>Report issues or problems</small>
+                  </button>
+                  <button class="quick-action-btn" onclick="studentDashboard.viewFees()">
+                    <div class="action-icon">
+                      <i class="fas fa-receipt"></i>
+                    </div>
+                    <span>Fee Details</span>
+                    <small>View payment history</small>
+                  </button>
+                  <button class="quick-action-btn" onclick="studentDashboard.roomChange()">
+                    <div class="action-icon">
+                      <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <span>Room Change</span>
+                    <small>Request room transfer</small>
+                  </button>
+                  <button class="quick-action-btn" onclick="studentDashboard.leaveApplication()">
+                    <div class="action-icon">
+                      <i class="fas fa-calendar-times"></i>
+                    </div>
+                    <span>Leave Application</span>
+                    <small>Apply for hostel leave</small>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Academic Calendar -->
+            <div class="panel calendar-panel">
+              <div class="panel-head">
+                <h3><i class="fas fa-calendar-alt"></i> Academic Calendar</h3>
+                <button class="btn-text" onclick="studentDashboard.viewFullCalendar()">
+                  View All
+                </button>
+              </div>
+              <div class="panel-body">
+                <div class="calendar-events">
+                  <div class="calendar-event">
+                    <div class="event-date urgent">
+                      <span class="event-day">15</span>
+                      <span class="event-month">MAR</span>
+                    </div>
+                    <div class="event-details">
+                      <h4>Semester Fee Deadline</h4>
+                      <p>Last date for fee submission without late fine</p>
+                      <span class="event-time">Until 5:00 PM</span>
+                    </div>
+                  </div>
+                  <div class="calendar-event">
+                    <div class="event-date warning">
+                      <span class="event-day">20</span>
+                      <span class="event-month">MAR</span>
+                    </div>
+                    <div class="event-details">
+                      <h4>Mid-Term Examinations</h4>
+                      <p>Commencement of mid-term exams</p>
+                      <span class="event-time">All Day</span>
+                    </div>
+                  </div>
+                  <div class="calendar-event">
+                    <div class="event-date info">
+                      <span class="event-day">25</span>
+                      <span class="event-month">MAR</span>
+                    </div>
+                    <div class="event-details">
+                      <h4>Cultural Fest</h4>
+                      <p>Annual hostel cultural festival</p>
+                      <span class="event-time">10:00 AM - 6:00 PM</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column -->
+          <div class="panel-column">
+            <!-- Recent Notices -->
+            <div class="panel notices-panel">
+              <div class="panel-head">
+                <h3><i class="fas fa-bullhorn"></i> Recent Notices</h3>
+                <button class="btn-text" onclick="studentDashboard.viewAllNotices()">
+                  View All
+                </button>
+              </div>
+              <div class="panel-body">
+                <div class="notices-list" id="recentNotices">
+                  <div class="notice-item">
+                    <div class="notice-icon urgent">
+                      <i class="fas fa-bell"></i>
+                    </div>
+                    <div class="notice-content">
+                      <h4>Hostel Maintenance Schedule</h4>
+                      <p>Scheduled maintenance in Block A on Saturday. Water supply will be temporarily affected from 2
+                        PM to 6 PM.</p>
+                      <div class="notice-meta">
+                        <span class="notice-date">2 hours ago</span>
+                        <span class="notice-priority urgent">Urgent</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="notice-item">
+                    <div class="notice-icon warning">
+                      <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="notice-content">
+                      <h4>Fee Submission Reminder</h4>
+                      <p>Last date for semester fee submission is approaching. Please clear your dues to avoid late fees
+                        and penalties.</p>
+                      <div class="notice-meta">
+                        <span class="notice-date">1 day ago</span>
+                        <span class="notice-priority important">Important</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="notice-item">
+                    <div class="notice-icon info">
+                      <i class="fas fa-info-circle"></i>
+                    </div>
+                    <div class="notice-content">
+                      <h4>Welcome to New Academic Session</h4>
+                      <p>All students are requested to complete their profile verification and document submission by
+                        the end of this month.</p>
+                      <div class="notice-meta">
+                        <span class="notice-date">3 days ago</span>
+                        <span class="notice-priority normal">Information</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- System Status -->
+            <div class="panel status-panel">
+              <div class="panel-head">
+                <h3><i class="fas fa-heartbeat"></i> System Status</h3>
+                <span class="status-indicator online"></span>
+              </div>
+              <div class="panel-body">
+                <div class="system-status">
+                  <div class="status-item">
+                    <div class="status-info">
+                      <i class="fas fa-user-check"></i>
+                      <div>
+                        <span class="status-title">Profile Completion</span>
+                        <span class="status-value">85%</span>
+                      </div>
+                    </div>
+                    <div class="progress-bar">
+                      <div class="progress-fill" style="width: 85%"></div>
+                    </div>
+                  </div>
+                  <div class="status-item">
+                    <div class="status-info">
+                      <i class="fas fa-file-contract"></i>
+                      <div>
+                        <span class="status-title">Documents Verified</span>
+                        <span class="status-value">3/5</span>
+                      </div>
+                    </div>
+                    <div class="progress-bar">
+                      <div class="progress-fill" style="width: 60%"></div>
+                    </div>
+                  </div>
+                  <div class="status-item">
+                    <div class="status-info">
+                      <i class="fas fa-shield-alt"></i>
+                      <div>
+                        <span class="status-title">Account Security</span>
+                        <span class="status-value">Strong</span>
+                      </div>
+                    </div>
+                    <div class="security-level high">
+                      <div class="level-dot"></div>
+                      <div class="level-dot"></div>
+                      <div class="level-dot"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Other pages will go here -->
+      <section class="page" id="profile">
+        <!-- Profile page content -->
+      </section>
+
+
+
+
+
+      <section class="page" id="complaints">
+        <div class="page-header">
+          <h1 class="page-title">Complaint Management</h1>
+          <div class="header-actions">
+            <button class="btn-primary" onclick="window.complaintManager.loadComplaints()">
+              <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+          </div>
+        </div>
+
+        <div class="dashboard-panels">
+          <!-- Left Column - Submit Complaint -->
+          <div class="panel-column">
+            <div class="panel">
+              <div class="panel-head">
+                <h3><i class="fas fa-plus-circle"></i> Submit New Complaint</h3>
+              </div>
+              <div class="panel-body">
+                <form id="complaintForm" class="complaint-form">
+                  <div class="form-group">
+                    <label for="complaintTitle">Title *</label>
+                    <input type="text" id="complaintTitle" name="title"
+                      placeholder="Brief description of your complaint" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="complaintCategory">Category *</label>
+                    <select id="complaintCategory" name="category" required>
+                      <option value="general">General</option>
+                      <option value="room_issue">Room Issue</option>
+                      <option value="maintenance">Maintenance</option>
+                      <option value="facility">Facility Problem</option>
+                      <option value="noise">Noise Complaint</option>
+                      <option value="cleanliness">Cleanliness</option>
+                      <option value="security">Security Concern</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="complaintPriority">Priority</label>
+                    <select id="complaintPriority" name="priority">
+                      <option value="low">Low</option>
+                      <option value="medium" selected>Medium</option>
+                      <option value="high">High</option>
+                      <option value="urgent">Urgent</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="complaintDescription">Description *</label>
+                    <textarea id="complaintDescription" name="description"
+                      placeholder="Please provide detailed information about your complaint..." required></textarea>
+                  </div>
+
+                  <!-- Attachment Section -->
+                  <div class="form-group">
+                    <label>Attachment (Optional)</label>
+                    <div class="webcam-section">
+                      <div class="webcam-controls">
+                        <button type="button" class="btn-outline" id="startWebcam">
+                          <i class="fas fa-camera"></i> Start Webcam
+                        </button>
+                        <button type="button" class="btn-outline" id="captureImage" style="display: none;">
+                          <i class="fas fa-camera-retro"></i> Capture Image
+                        </button>
+                        <input type="file" id="complaintAttachment" name="attachment" accept="image/*"
+                          class="btn-outline" style="display: inline-block;">
+                      </div>
+
+                      <video id="webcamVideo" width="100%" autoplay></video>
+                      <canvas id="webcamCanvas" style="display: none;"></canvas>
+                      <img id="webcamPreview" class="webcam-preview" alt="Captured Image">
+                      <img id="filePreview" class="file-preview" alt="File Preview">
+                    </div>
+                  </div>
+
+                  <div class="form-actions">
+                    <button type="reset" class="btn-outline" onclick="window.complaintManager.resetWebcam()">
+                      <i class="fas fa-times"></i> Cancel
+                    </button>
+                    <button type="submit" class="btn-primary">
+                      <i class="fas fa-paper-plane"></i> Submit Complaint
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column - Complaint History -->
+          <div class="panel-column">
+            <div class="panel">
+              <div class="panel-head">
+                <h3><i class="fas fa-history"></i> Complaint History</h3>
+              </div>
+              <div class="panel-body">
+                <div id="complaintsList">
+                  <!-- Complaints will be loaded here -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Fee Management Section for Student Dashboard -->
+      <!-- Fee Management Section for Student -->
+      <section class="page" id="fees">
+        <div class="page-header">
+          <h1 class="page-title">My Fee Challans</h1>
+          <div class="header-actions">
+            <button class="btn-outline" onclick="studentFeeManager.refreshFees()">
+              <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+          </div>
+        </div>
+
+        <!-- Fee Statistics -->
+        <div class="student-stats-grid">
+          <div class="student-stat-card" onclick="studentFeeManager.filterFees('pending')">
+            <div class="stat-icon warning">
+              <i class="fas fa-clock"></i>
+            </div>
+            <div class="stat-info">
+              <h3 id="pendingFeesCount">0</h3>
+              <p>Pending Fees</p>
+              <div class="stat-subtitle">
+                <i class="fas fa-hourglass-half"></i>
+                <span>Awaiting payment</span>
+              </div>
+            </div>
+            <div class="stat-badge pending">Pending</div>
+          </div>
+
+          <div class="student-stat-card" onclick="studentFeeManager.filterFees('submitted')">
+            <div class="stat-icon info">
+              <i class="fas fa-search"></i>
+            </div>
+            <div class="stat-info">
+              <h3 id="submittedCount">0</h3>
+              <p>Under Review</p>
+              <div class="stat-subtitle">
+                <i class="fas fa-clock"></i>
+                <span>Pending verification</span>
+              </div>
+            </div>
+            <div class="stat-badge review">Review</div>
+          </div>
+
+          <div class="student-stat-card" onclick="studentFeeManager.filterFees('approved')">
+            <div class="stat-icon success">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="stat-info">
+              <h3 id="approvedCount">0</h3>
+              <p>Paid Fees</p>
+              <div class="stat-subtitle">
+                <i class="fas fa-receipt"></i>
+                <span>Verified payments</span>
+              </div>
+            </div>
+            <div class="stat-badge paid">Paid</div>
+          </div>
+
+          <div class="student-stat-card" onclick="studentFeeManager.filterFees('all')">
+            <div class="stat-icon primary">
+              <i class="fas fa-money-bill-wave"></i>
+            </div>
+            <div class="stat-info">
+              <h3 id="totalAmount">Rs. 0</h3>
+              <p>Total Amount</p>
+              <div class="stat-subtitle">
+                <i class="fas fa-chart-line"></i>
+                <span>All challans</span>
+              </div>
+            </div>
+            <div class="stat-badge total">Total</div>
+          </div>
+        </div>
+
+        <!-- Fee Challans List -->
+        <div class="panel">
+          <div class="panel-head">
+            <h3><i class="fas fa-file-invoice-dollar"></i> My Challans</h3>
+            <div class="filter-controls">
+              <select id="feeStatusFilter" onchange="studentFeeManager.filterFees(this.value)">
+                <option value="all">All Challans</option>
+                <option value="pending">Pending Payment</option>
+                <option value="submitted">Under Review</option>
+                <option value="approved">Approved/Paid</option>
+                <option value="rejected">Rejected</option>
+                <option value="overdue">Overdue</option>
+              </select>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div id="feesList">
+              <!-- Fees will be loaded here -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Upload Payment Proof Modal -->
+      <div class="modal-overlay" id="uploadProofModal">
+        <div class="modal-container" style="max-width: 600px;">
+          <div class="modal-header">
+            <h2><i class="fas fa-upload"></i> Upload Payment Proof</h2>
+            <button class="modal-close" onclick="studentFeeManager.closeUploadModal()">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div id="uploadChallanInfo"></div>
+            <form id="uploadProofForm">
+              <div class="form-section">
+                <h4>Payment Details</h4>
+                <div class="form-group">
+                  <label>Transaction ID / Reference Number</label>
+                  <input type="text" id="transactionId" class="form-input"
+                    placeholder="Enter transaction ID from bank slip" required>
+                </div>
+                <div class="form-group">
+                  <label>Payment Method</label>
+                  <select id="paymentMethod" class="form-select">
+                    <option value="cash">Cash Deposit</option>
+                    <option value="online">Online Transfer</option>
+                    <option value="cheque">Cheque</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Payment Date</label>
+                  <input type="date" id="paymentDate" class="form-input" required>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <h4>Upload Proof</h4>
+                <div class="upload-area" onclick="document.getElementById('proofFile').click()">
+                  <i class="fas fa-cloud-upload-alt"></i>
+                  <p>Click to upload payment receipt/screenshot</p>
+                  <small>JPG, PNG, PDF (Max 5MB)</small>
+                  <input type="file" id="proofFile" accept="image/*,.pdf" style="display: none;"
+                    onchange="studentFeeManager.previewProof(this)">
+                </div>
+                <div id="proofPreview" style="display: none; margin-top: 15px;">
+                  <img id="proofImage" src="" style="max-width: 100%; border-radius: 8px;">
+                </div>
+              </div>
+
+              <div class="form-section">
+                <h4>Additional Notes</h4>
+                <textarea id="paymentNotes" class="form-input" rows="3"
+                  placeholder="Any additional information..."></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button class="btn-secondary" onclick="studentFeeManager.closeUploadModal()">Cancel</button>
+            <button class="btn-primary" onclick="studentFeeManager.submitProof()">
+              <i class="fas fa-paper-plane"></i> Submit Proof
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- View Challan Modal -->
+      <div class="modal-overlay" id="viewChallanModal">
+        <div class="modal-container" style="max-width: 90%;">
+          <div class="modal-header">
+            <h2><i class="fas fa-receipt"></i> Challan Details</h2>
+            <button class="modal-close" onclick="studentFeeManager.closeChallanModal()">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div id="challanViewContent"></div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn-secondary" onclick="studentFeeManager.closeChallanModal()">Close</button>
+            <button class="btn-primary" onclick="studentFeeManager.downloadChallan()">
+              <i class="fas fa-download"></i> Download PDF
+            </button>
+          </div>
+        </div>
+      </div>
+
+
+    </main>
+  </div>
+
+
+
+
+
+  <!-- Notification Container -->
+  <div class="notification-container" id="notificationContainer"></div>
+
+  <script src="/static/js/student_dashboard.js"></script>
+  <script src="/static/js/modules_student/student_dashboard_utils.js"></script>
+  <script src="/static/js/modules_student/student_dashboard_profile.js"></script>
+  <script src="/static/js/modules_student/student_dashboard_complaints.js"></script>
+  <script src="/static/js/modules_student/student_dashboard_announcements.js"></script>
+  <script src="/static/js/modules_student/student_dashboard_fees.js"></script>
+  <script src="/static/js/modules_student/student_dashboard_dashboard.js"></script>
+</body>
+
+</html>
