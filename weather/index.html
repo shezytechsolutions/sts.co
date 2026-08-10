@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Waheed Hussain & Mehar Khan — Full-Stack Engineering & Applied AI</title>
+<meta name="description" content="Waheed Hussain and Mehar Khan build full-stack web applications, APIs, and applied AI systems — including the Weather & Field Outlook forecasting platform.">
+<link rel="icon" href="waheed-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{
+  --ink:#0B0F1A;
+  --ink-2:#111729;
+  --paper:#F4F5F8;
+  --paper-2:#FFFFFF;
+  --blue:#3D5AFE;
+  --blue-2:#8EA2FF;
+  --amber:#E8934F;
+  --slate:#5B6B85;
+  --slate-light:#8E9AB0;
+  --line-dark:rgba(255,255,255,0.10);
+  --line-light:rgba(11,15,26,0.10);
+  --good:#2FAE6B;
+  --radius:16px;
+  --shadow:0 20px 48px -22px rgba(11,15,26,0.35);
+  --maxw:1180px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  line-height:1.55;
+}
+.display{font-family:'Space Grotesk',sans-serif;}
+.mono{font-family:'IBM Plex Mono',monospace;}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+ul{list-style:none;}
+.container{max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,5vw,48px);}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--amber);
+}
+.eyebrow::before{content:"";width:16px;height:1px;background:var(--amber);}
+h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;font-weight:700;line-height:1.12;letter-spacing:-0.01em;}
+h2{font-size:clamp(28px,3.6vw,42px);}
+.section-tag{color:var(--slate);max-width:520px;margin-top:12px;font-size:15.5px;}
+section{padding:88px 0;}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:13px 26px;border-radius:999px;font-weight:600;font-size:14.5px;
+  border:1px solid transparent;cursor:pointer;transition:transform .18s ease, background .18s ease, border-color .18s ease;
+}
+.btn:hover{transform:translateY(-2px);}
+.btn-primary{background:var(--blue);color:#fff;}
+.btn-primary:hover{background:#2f47d6;}
+.btn-outline-dark{border-color:rgba(255,255,255,0.25);color:#fff;}
+.btn-outline-dark:hover{border-color:#fff;}
+.btn-outline-light{border-color:var(--line-light);color:var(--ink);}
+.btn-outline-light:hover{border-color:var(--ink);}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px;}
+
+/* ---------- Header ---------- */
+header{
+  position:sticky;top:0;z-index:50;
+  background:rgba(11,15,26,0.86);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line-dark);
+}
+.nav-container{display:flex;align-items:center;justify-content:space-between;height:76px;color:#fff;}
+.logo{display:flex;align-items:center;gap:10px;font-family:'Space Grotesk';font-weight:700;font-size:17px;}
+.logo img{height:34px;width:34px;object-fit:contain;}
+.logo .logo-sub{display:block;font-family:'IBM Plex Mono';font-weight:500;font-size:10px;letter-spacing:1.5px;color:var(--slate-light);text-transform:uppercase;margin-top:2px;}
+nav.nav-links{display:flex;gap:34px;}
+nav.nav-links a{font-size:14px;color:#C7CEE0;font-weight:500;transition:color .15s ease;}
+nav.nav-links a:hover{color:#fff;}
+.header-right{display:flex;align-items:center;gap:18px;}
+.hamburger{display:none;color:#fff;font-size:20px;cursor:pointer;}
+
+/* ---------- Hero ---------- */
+#hero{
+  position:relative;background:var(--ink);color:#fff;overflow:hidden;
+  padding:110px 0 100px;
+}
+#hero .schematic{position:absolute;inset:0;opacity:0.5;pointer-events:none;}
+.hero-container{position:relative;z-index:2;display:grid;grid-template-columns:1.15fr 0.85fr;gap:48px;align-items:center;}
+.hero-content h1{font-size:clamp(34px,5vw,58px);margin-top:18px;color:#fff;}
+.hero-content h1 .accent{color:var(--blue-2);}
+.hero-content p{color:#AEB8CE;max-width:520px;margin-top:20px;font-size:16.5px;}
+.hero-buttons{display:flex;gap:16px;margin-top:34px;flex-wrap:wrap;}
+.status-panel{
+  background:rgba(255,255,255,0.04);border:1px solid var(--line-dark);border-radius:var(--radius);
+  padding:26px;backdrop-filter:blur(6px);
+}
+.status-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line-dark);}
+.status-row:last-child{border-bottom:none;}
+.status-row .label{font-family:'IBM Plex Mono';font-size:12px;color:var(--slate-light);letter-spacing:.5px;text-transform:uppercase;}
+.status-row .val{font-family:'IBM Plex Mono';font-size:13px;color:#fff;display:flex;align-items:center;gap:8px;}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 0 3px rgba(47,174,107,0.18);}
+
+/* ---------- Stats ---------- */
+#stats{background:var(--paper-2);padding:56px 0;border-bottom:1px solid var(--line-light);}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;text-align:center;}
+.stat-item h3{font-size:clamp(30px,4vw,44px);color:var(--blue);}
+.stat-item p{font-family:'IBM Plex Mono';font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--slate);margin-top:6px;}
+
+/* ---------- Team ---------- */
+#team{background:var(--paper);}
+.team-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:44px;}
+.badge{
+  background:var(--paper-2);border:1px solid var(--line-light);border-radius:var(--radius);
+  overflow:hidden;box-shadow:var(--shadow);
+}
+.badge-top{background:var(--ink);color:#fff;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;}
+.badge-top span{font-family:'IBM Plex Mono';font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--slate-light);}
+.badge-top .dot-live{display:flex;align-items:center;gap:7px;font-family:'IBM Plex Mono';font-size:11px;color:var(--good);}
+.badge-body{padding:32px;display:flex;gap:22px;}
+.avatar{
+  width:88px;height:88px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--blue),var(--amber));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Space Grotesk';font-weight:700;font-size:26px;color:#fff;
+  overflow:hidden;border:2px solid var(--line-light);
+}
+.avatar img{width:100%;height:100%;object-fit:cover;}
+.badge-info h4{font-size:20px;}
+.badge-info .role{font-family:'IBM Plex Mono';font-size:12px;color:var(--amber);letter-spacing:.5px;margin-top:4px;}
+.badge-info p{color:var(--slate);font-size:14.5px;margin-top:12px;}
+.badge-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
+.badge-tags span{
+  font-family:'IBM Plex Mono';font-size:11px;background:rgba(61,90,254,0.08);color:var(--blue);
+  padding:5px 10px;border-radius:999px;border:1px solid rgba(61,90,254,0.18);
+}
+
+/* ---------- Skills ---------- */
+#skills{background:var(--paper-2);}
+.skills-container{display:grid;grid-template-columns:0.9fr 1.1fr;gap:60px;align-items:start;}
+.skills-left p{color:var(--slate);margin-top:16px;max-width:420px;}
+.skills-left .btn{margin-top:26px;}
+.skills-right{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.skill-card{border:1px solid var(--line-light);border-radius:14px;padding:26px;transition:border-color .18s ease, transform .18s ease;}
+.skill-card:hover{border-color:var(--blue);transform:translateY(-3px);}
+.skill-card i{font-size:22px;color:var(--blue);}
+.skill-card h4{font-size:16px;margin-top:14px;}
+.skill-card p{font-size:13.5px;color:var(--slate);margin-top:8px;}
+
+/* ---------- Featured build (Weather project) ---------- */
+#featured{background:var(--ink);color:#fff;}
+.featured-head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;}
+.featured-head h2{color:#fff;}
+.featured-head p{color:#AEB8CE;}
+.featured-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:44px;align-items:center;}
+.browser-mock{
+  background:#0F1526;border:1px solid var(--line-dark);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);
+}
+.browser-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;background:#131A2E;border-bottom:1px solid var(--line-dark);}
+.browser-bar .dotx{width:9px;height:9px;border-radius:50%;background:#2A3350;}
+.browser-bar .url{font-family:'IBM Plex Mono';font-size:11px;color:var(--slate-light);margin-left:8px;}
+.browser-preview{
+  padding:36px 28px;background:linear-gradient(160deg,#0B1526,#152238);
+  display:flex;flex-direction:column;gap:14px;
+}
+.mini-hero{display:flex;justify-content:space-between;align-items:center;}
+.mini-hero .temp{font-family:'Space Grotesk';font-size:44px;font-weight:700;color:#fff;}
+.mini-hero .place{font-family:'IBM Plex Mono';font-size:11px;color:var(--blue-2);letter-spacing:1px;}
+.mini-row{display:flex;gap:10px;}
+.mini-chip{flex:1;background:rgba(255,255,255,0.05);border:1px solid var(--line-dark);border-radius:10px;padding:12px;text-align:center;}
+.mini-chip .d{font-family:'IBM Plex Mono';font-size:10px;color:var(--slate-light);}
+.mini-chip .t{font-family:'Space Grotesk';font-size:16px;color:#fff;margin-top:4px;}
+.featured-copy .eyebrow{color:var(--blue-2);}
+.featured-copy .eyebrow::before{background:var(--blue-2);}
+.featured-copy h3{font-size:clamp(24px,3vw,32px);color:#fff;margin-top:14px;}
+.featured-copy p{color:#AEB8CE;margin-top:14px;font-size:15.5px;}
+.feature-list{margin-top:20px;display:flex;flex-direction:column;gap:10px;}
+.feature-list li{display:flex;gap:10px;font-size:14.5px;color:#D6DCEA;align-items:flex-start;}
+.feature-list i{color:var(--good);margin-top:3px;}
+.featured-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;}
+.featured-tags span{font-family:'IBM Plex Mono';font-size:11px;color:var(--blue-2);border:1px solid var(--line-dark);padding:5px 10px;border-radius:999px;}
+.featured-copy .btn{margin-top:26px;}
+
+/* ---------- Projects ---------- */
+#projects{background:var(--paper);}
+.section-header{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;}
+.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:44px;}
+.project-card{background:var(--paper-2);border:1px solid var(--line-light);border-radius:14px;overflow:hidden;transition:transform .18s ease, box-shadow .18s ease;}
+.project-card:hover{transform:translateY(-4px);box-shadow:var(--shadow);}
+.project-img{height:180px;overflow:hidden;}
+.project-img img{width:100%;height:100%;object-fit:cover;}
+.project-info{padding:22px;}
+.project-info h4{font-size:16.5px;}
+.project-info p{font-size:13.5px;color:var(--slate);margin-top:8px;}
+.tech-stack{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px;}
+.tech-stack span{font-family:'IBM Plex Mono';font-size:10.5px;background:rgba(11,15,26,0.05);padding:4px 9px;border-radius:999px;color:var(--slate);}
+
+/* ---------- Testimonials ---------- */
+#testimonials{background:var(--paper-2);}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:44px;}
+.testi-card{border:1px solid var(--line-light);border-radius:14px;padding:26px;}
+.testi-card .stars{color:var(--amber);font-size:13px;letter-spacing:2px;}
+.testi-card p{font-size:14.5px;color:var(--ink);margin-top:14px;}
+.testi-who{display:flex;align-items:center;gap:10px;margin-top:20px;}
+.testi-who .initial{width:34px;height:34px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk';font-weight:700;font-size:13px;}
+.testi-who .name{font-size:13.5px;font-weight:600;}
+.testi-who .role{font-family:'IBM Plex Mono';font-size:10.5px;color:var(--slate);}
+
+/* ---------- Contact ---------- */
+#contact{background:var(--ink);color:#fff;}
+.contact-container{display:grid;grid-template-columns:1fr 1fr;gap:56px;}
+.contact-left h2{color:#fff;}
+.contact-left p{color:#AEB8CE;margin-top:14px;max-width:420px;}
+.contact-info-item{display:flex;gap:16px;align-items:flex-start;margin-top:26px;}
+.contact-info-item i{width:38px;height:38px;border-radius:10px;background:rgba(61,90,254,0.15);color:var(--blue-2);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.contact-info-item h4{font-size:13px;color:var(--slate-light);font-family:'IBM Plex Mono';letter-spacing:.5px;text-transform:uppercase;font-weight:500;}
+.contact-info-item p{color:#fff;margin-top:4px;font-size:15px;}
+.contact-right form{display:flex;flex-direction:column;gap:14px;}
+.contact-right input,.contact-right textarea{
+  background:rgba(255,255,255,0.05);border:1px solid var(--line-dark);border-radius:10px;
+  padding:14px 16px;color:#fff;font-family:'Inter';font-size:14.5px;resize:none;
+}
+.contact-right input::placeholder,.contact-right textarea::placeholder{color:var(--slate-light);}
+.contact-right input:focus,.contact-right textarea:focus{outline:none;border-color:var(--blue);}
+.contact-right button{align-self:flex-start;margin-top:6px;}
+
+footer{background:var(--ink);border-top:1px solid var(--line-dark);padding:26px 0;color:var(--slate-light);}
+.footer-inner{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:13px;}
+
+@media(max-width:920px){
+  .hero-container,.skills-container,.featured-grid,.contact-container{grid-template-columns:1fr;}
+  .team-grid,.projects-grid,.testi-grid{grid-template-columns:1fr;}
+  .stats-grid{grid-template-columns:repeat(3,1fr);}
+  nav.nav-links{display:none;}
+  .hamburger{display:block;}
+  .skills-right{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav-container">
+    <div class="logo">
+      <img src="waheed-logo.png" alt="Waheed Hussain and Mehar Khan Technologies logo">
+      <span>WH & MK Technologies<span class="logo-sub">Full-Stack &amp; Applied AI</span></span>
+    </div>
+    <nav class="nav-links">
+      <a href="#team">Team</a>
+      <a href="#skills">Skills</a>
+      <a href="#featured">Featured Build</a>
+      <a href="#projects">Portfolio</a>
+      <a href="#testimonials">Testimonials</a>
+    </nav>
+    <div class="header-right">
+      <a href="weather.html" class="btn btn-outline-dark">view code</a>
+      <div class="hamburger"><i class="fa-solid fa-bars"></i></div>
+    </div>
+  </div>
+</header>
+
+<!-- Hero -->
+<section id="hero">
+  <svg class="schematic" viewBox="0 0 1200 700" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="#8EA2FF" stroke-width="1" opacity="0.16" fill="none">
+      <path d="M0 120 H320 V60 H700"/>
+      <path d="M0 300 H180 V420 H520 V300 H900"/>
+      <path d="M1200 90 H860 V220 H1050 V500"/>
+      <path d="M1200 620 H760 V520 H420"/>
+      <circle cx="320" cy="120" r="4" fill="#8EA2FF"/>
+      <circle cx="700" cy="60" r="4" fill="#E8934F"/>
+      <circle cx="520" cy="420" r="4" fill="#8EA2FF"/>
+      <circle cx="900" cy="300" r="4" fill="#8EA2FF"/>
+      <circle cx="1050" cy="220" r="4" fill="#E8934F"/>
+      <circle cx="420" cy="520" r="4" fill="#8EA2FF"/>
+    </g>
+  </svg>
+  <div class="container hero-container">
+    <div class="hero-content">
+      <span class="eyebrow">Waheed Hussain &amp; Mehar Khan</span>
+      <h1>We engineer <span class="accent">full-stack</span> products and applied <span class="accent">AI</span> systems.</h1>
+      <p>Two-person engineering studio building web applications, APIs, and machine-learning-driven tools — from secure backend architecture to computer-vision models, shipped end to end.</p>
+      <div class="hero-buttons">
+        <a href="#contact" class="btn btn-primary">Contact Us</a>
+        <a href="#featured" class="btn btn-outline-dark">See Featured Build <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      </div>
+    </div>
+    <div class="status-panel">
+      <div class="status-row"><span class="label">Engineer 01</span><span class="val"><span class="dot"></span>Waheed Hussain — Full-Stack</span></div>
+      <div class="status-row"><span class="label">Engineer 02</span><span class="val"><span class="dot"></span>Mehar Khan — AI &amp; Data</span></div>
+      <div class="status-row"><span class="label">Latest Build</span><span class="val">Weather &amp; Field Outlook</span></div>
+      <div class="status-row"><span class="label">Stack</span><span class="val">Python · Flask · MySQL · JS</span></div>
+      <div class="status-row"><span class="label">Availability</span><span class="val"><span class="dot"></span>Open for projects</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats -->
+<section id="stats">
+  <div class="container stats-grid">
+    <div class="stat-item"><h3>80+</h3><p>Projects Delivered</p></div>
+    <div class="stat-item"><h3>200+</h3><p>Satisfied Clients</p></div>
+    <div class="stat-item"><h3>99+</h3><p>Reviews Received</p></div>
+  </div>
+</section>
+
+<!-- Team -->
+<section id="team">
+  <div class="container">
+    <span class="eyebrow">The Team</span>
+    <h2>Two engineers, one studio.</h2>
+    <p class="section-tag">WH &amp; MK Technologies is run by two engineers who split the stack between them — one on product and backend, one on AI and data — and ship together.</p>
+    <div class="team-grid">
+      <div class="badge">
+        <div class="badge-top"><span>Engineer_01 // Founder</span><span class="dot-live"><span class="dot"></span>Online</span></div>
+        <div class="badge-body">
+          <div class="avatar">
+            <img src="waheedprofile.png" alt="Waheed Hussain" onerror="this.style.display='none'; this.parentElement.textContent='WH';">
+          </div>
+          <div class="badge-info">
+            <h4>Waheed Hussain</h4>
+            <div class="role">Full-Stack Engineer &amp; Co-Founder</div>
+            <p>Leads product architecture and delivery — designing REST APIs, database schemas, and interfaces that stay reliable at scale.</p>
+            <div class="badge-tags"><span>Python</span><span>Flask</span><span>MySQL</span><span>JavaScript</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="badge">
+        <div class="badge-top"><span>Engineer_02 // Co-Founder</span><span class="dot-live"><span class="dot"></span>Online</span></div>
+        <div class="badge-body">
+          <div class="avatar">
+            <img src="meharkhan.png" alt="Mehar Khan" onerror="this.style.display='none'; this.parentElement.textContent='MK';">
+          </div>
+          <div class="badge-info">
+            <h4>Mehar Khan</h4>
+            <div class="role">AI &amp; Data Engineer &amp; Co-Founder</div>
+            <p>Builds the machine-learning and computer-vision layer — model training, data pipelines, and forecasting logic behind every build.</p>
+            <div class="badge-tags"><span>Machine Learning</span><span>Computer Vision</span><span>Data Pipelines</span><span>Python</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Skills -->
+<section id="skills">
+  <div class="container skills-container">
+    <div class="skills-left">
+      <span class="eyebrow">Capabilities</span>
+      <h2>Why hire us for your next build?</h2>
+      <p>Between us we cover the whole stack — product, backend, and applied AI — so a project moves from idea to a working, secure system without handoffs.</p>
+      <a href="#contact" class="btn btn-primary">Hire Us</a>
+    </div>
+    <div class="skills-right">
+      <div class="skill-card">
+        <i class="fa-solid fa-code"></i>
+        <h4>Full-Stack Engineering</h4>
+        <p>End-to-end web application development — Python, JavaScript, HTML5, CSS3, SQL.</p>
+      </div>
+      <div class="skill-card">
+        <i class="fa-solid fa-mobile-screen"></i>
+        <h4>App Development</h4>
+        <p>Cross-platform mobile solutions with responsive design and clean user experience.</p>
+      </div>
+      <div class="skill-card">
+        <i class="fa-solid fa-database"></i>
+        <h4>Python &amp; Flask Backend</h4>
+        <p>RESTful API architecture, MySQL database management, and secure backend engineering.</p>
+      </div>
+      <div class="skill-card">
+        <i class="fa-solid fa-brain"></i>
+        <h4>AI &amp; Data Science</h4>
+        <p>Computer vision, machine-learning model training, and forecasting systems.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Build: Weather Project -->
+<section id="featured">
+  <div class="container">
+    <div class="featured-head">
+      <div>
+        <span class="eyebrow">Featured Build</span>
+        <h2>Weather &amp; Field Outlook</h2>
+      </div>
+      <p style="max-width:420px;">Our latest joint build — an interactive weather forecasting platform, live now.</p>
+    </div>
+    <div class="featured-grid">
+      <div class="browser-mock">
+        <div class="browser-bar"><span class="dotx"></span><span class="dotx"></span><span class="dotx"></span><span class="url">weather-forecast.html</span></div>
+        <div class="browser-preview">
+          <div class="mini-hero">
+            <div>
+              <div class="place">CURRENT LOCATION</div>
+              <div class="temp">27°</div>
+            </div>
+            <i class="fa-solid fa-cloud-sun" style="font-size:40px;color:#E8934F;"></i>
+          </div>
+          <div class="mini-row">
+            <div class="mini-chip"><div class="d">MON</div><div class="t">29°</div></div>
+            <div class="mini-chip"><div class="d">TUE</div><div class="t">31°</div></div>
+            <div class="mini-chip"><div class="d">WED</div><div class="t">26°</div></div>
+            <div class="mini-chip"><div class="d">THU</div><div class="t">28°</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="featured-copy">
+        <span class="eyebrow">What we built</span>
+        <h3>A field-ready forecasting tool, not just a widget.</h3>
+        <p>Weather &amp; Field Outlook gives a location-based current conditions view alongside an hourly and multi-day forecast, built as a single self-contained web app with a bilingual English / Urdu interface.</p>
+        <ul class="feature-list">
+          <li><i class="fa-solid fa-circle-check"></i>Live search by city with current conditions and temperature gauge</li>
+          <li><i class="fa-solid fa-circle-check"></i>Hourly and multi-day forecast breakdown</li>
+          <li><i class="fa-solid fa-circle-check"></i>Bilingual interface — English and Urdu (RTL) support</li>
+          <li><i class="fa-solid fa-circle-check"></i>Fully responsive, single-file build</li>
+        </ul>
+        <div class="featured-tags"><span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>Weather API</span></div>
+        <a href="weather_forcast.html" target="_blank" class="btn btn-primary">Launch Live Build <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Projects -->
+<section id="projects">
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <span class="eyebrow">Portfolio</span>
+        <h2>Other builds<br>from the studio</h2>
+        <p class="section-tag">A selection of full-stack and AI-driven applications we've shipped.</p>
+      </div>
+      <a href="#contact" class="btn btn-primary">See More</a>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-img"><img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="AI image forensics dashboard"></div>
+        <div class="project-info">
+          <h4>AI-Powered Image Forensics Model</h4>
+          <p>Deep-learning solution that detects and flags manipulated or synthetic (deepfake) images for digital fraud prevention.</p>
+          <div class="tech-stack"><span>Python</span><span>ML</span><span>Computer Vision</span></div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-img"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Online voting platform interface"></div>
+        <div class="project-info">
+          <h4>Online Voting Platform</h4>
+          <p>A secure, transparent digital voting web app with real-time tallying, role-based access, and audit-ready data persistence.</p>
+          <div class="tech-stack"><span>Flask</span><span>MySQL</span><span>JS</span></div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-img"><img src="https://images.unsplash.com/photo-1555854877-bab0e564b8d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Hostel management system interface"></div>
+        <div class="project-info">
+          <h4>Smart Hostel Management System</h4>
+          <p>Comprehensive portal for room allocation, student onboarding, administrative workflows, and automated fee processing.</p>
+          <div class="tech-stack"><span>Flask</span><span>MySQL</span><span>Bootstrap</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section id="testimonials">
+  <div class="container">
+    <span class="eyebrow">Testimonials</span>
+    <h2>What clients say</h2>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <p>"Delivered our platform ahead of schedule with clean, well-documented code. Communication was excellent throughout."</p>
+        <div class="testi-who"><div class="initial">A</div><div><div class="name">Ayesha R.</div><div class="role">Product Lead</div></div></div>
+      </div>
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <p>"The AI model they built for us outperformed our in-house baseline and shipped with clear documentation."</p>
+        <div class="testi-who"><div class="initial">S</div><div><div class="name">Samir K.</div><div class="role">Startup Founder</div></div></div>
+      </div>
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <p>"Responsive, professional, and genuinely good problem solvers. Our go-to team for full-stack work now."</p>
+        <div class="testi-who"><div class="initial">F</div><div><div class="name">Fatima N.</div><div class="role">Operations Manager</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+  <div class="container contact-container">
+    <div class="contact-left">
+      <span class="eyebrow">Contact</span>
+      <h2>Let's discuss your project</h2>
+      <p>We're always open to discussing new projects, creative ideas, or opportunities to be part of your vision.</p>
+      <div class="contact-info-item">
+        <i class="fa-solid fa-envelope"></i>
+        <div><h4>Email</h4><p>WaheedMeharTechnologies@gmail.com</p></div>
+      </div>
+      <div class="contact-info-item">
+        <i class="fa-solid fa-phone"></i>
+        <div><h4>Phone</h4><p>+923253993546</p></div>
+      </div>
+      <div class="contact-info-item">
+        <i class="fa-solid fa-location-dot"></i>
+        <div><h4>Location</h4><p>Khairpur,Sindh,Pakistan</p></div>
+      </div>
+    </div>
+    <div class="contact-right">
+      <form>
+        <input type="text" placeholder="Your Name">
+        <input type="email" placeholder="Your Email">
+        <input type="text" placeholder="Subject">
+        <textarea rows="5" placeholder="Your Message"></textarea>
+        <button type="submit" class="btn btn-primary">Send Message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container footer-inner">
+    <p>&copy; 2026 Waheed Hussain &amp; Mehar Khan Technologies. All Rights Reserved.</p>
+    <p>Built by Waheed Hussain &amp; Mehar Khan</p>
+  </div>
+</footer>
+
+<script>
+document.querySelector('.hamburger').addEventListener('click', function(){
+  var nav = document.querySelector('.nav-links');
+  nav.style.display = (nav.style.display === 'flex') ? 'none' : 'flex';
+  nav.style.cssText += 'flex-direction:column;position:absolute;top:76px;left:0;right:0;background:#0B0F1A;padding:20px 24px;gap:18px;';
+});
+</script>
+</body>
+</html>
