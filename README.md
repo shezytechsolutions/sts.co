@@ -46,7 +46,7 @@ The site covers:
 Founder & Full‑Stack / Mobile App Developer
 
 - 🐙 GitHub: [@shezytechsolutions](https://github.com/your-username)
-- 📧 Email: hello@shezytech.com
+- 📧 Email: shezytechsolutions@gmail.com
 
 
 
